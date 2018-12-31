@@ -46,11 +46,11 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 190,
-        "y": 160,
+        "x": 130,
+        "y": 60,
         "wires": [
             [
-                "8dafd216.8f2338"
+                "b6f79a0e.22d3a"
             ]
         ]
     },
@@ -81,7 +81,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 3,
-        "x": 270,
+        "x": 330,
         "y": 240,
         "wires": [
             [
@@ -89,7 +89,7 @@
             ],
             [],
             [
-                "336b63d4.3e53dc"
+                "511fe987.a629c"
             ]
         ]
     },
@@ -184,11 +184,6 @@
                 "t": "delete",
                 "p": "payload.place",
                 "pt": "msg"
-            },
-            {
-                "t": "delete",
-                "p": "payload.time",
-                "pt": "msg"
             }
         ],
         "action": "",
@@ -231,11 +226,6 @@
                 "t": "delete",
                 "p": "payload.place",
                 "pt": "msg"
-            },
-            {
-                "t": "delete",
-                "p": "payload.time",
-                "pt": "msg"
             }
         ],
         "action": "",
@@ -272,15 +262,15 @@
         "id": "8f833f93.7cf838",
         "type": "homekit-service",
         "z": "61c2c070.b79548",
-        "bridge": "3ef852b9.f186a6",
+        "bridge": "6db576f4.9fa0a",
         "name": "PM10 Dustsensor",
         "serviceName": "AirQualitySensor",
         "manufacturer": "Rose53",
         "model": "Default Model",
         "serialNo": "Default Serial Number",
         "characteristicProperties": "{}",
-        "x": 1110,
-        "y": 280,
+        "x": 950,
+        "y": 380,
         "wires": [
             []
         ]
@@ -307,8 +297,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 450,
-        "y": 360,
+        "x": 130,
+        "y": 500,
         "wires": [
             [
                 "94520610.b706b8"
@@ -340,13 +330,15 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 670,
-        "y": 340,
+        "x": 350,
+        "y": 420,
         "wires": [
             [
                 "2e48efb9.994a88"
             ],
-            []
+            [
+                "c7cf1208.a7394"
+            ]
         ]
     },
     {
@@ -371,16 +363,6 @@
                 "t": "delete",
                 "p": "payload.type",
                 "pt": "msg"
-            },
-            {
-                "t": "delete",
-                "p": "payload.place",
-                "pt": "msg"
-            },
-            {
-                "t": "delete",
-                "p": "payload.time",
-                "pt": "msg"
             }
         ],
         "action": "",
@@ -388,8 +370,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 860,
-        "y": 280,
+        "x": 540,
+        "y": 380,
         "wires": [
             [
                 "9448d86b.c03498"
@@ -418,11 +400,15 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 670,
-        "y": 400,
+        "x": 350,
+        "y": 580,
         "wires": [
-            [],
-            []
+            [
+                "4b6268b0.6f5bd"
+            ],
+            [
+                "dde9d439.56b57"
+            ]
         ]
     },
     {
@@ -433,11 +419,264 @@
         "func": "// calculate the AirQuality \nmsg.payload.AirQuality = 0;  // unknown\n\nif (msg.payload.PM10Density < 12) {\n    msg.payload.AirQuality = 1; // excellent\n} else if (msg.payload.PM10Density < 26) {\n    msg.payload.AirQuality = 2; // good\n} else if (msg.payload.PM10Density < 40) {\n    msg.payload.AirQuality = 3; // fair\n} else if (msg.payload.PM10Density < 75) {\n    msg.payload.AirQuality = 4; // inferior\n} else {\n    msg.payload.AirQuality = 5; // poor\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 980,
-        "y": 240,
+        "x": 740,
+        "y": 380,
         "wires": [
             [
                 "8f833f93.7cf838"
+            ]
+        ]
+    },
+    {
+        "id": "543d74c3.881c6c",
+        "type": "homekit-service",
+        "z": "61c2c070.b79548",
+        "bridge": "6db576f4.9fa0a",
+        "name": "PM25 Dustsensor",
+        "serviceName": "AirQualitySensor",
+        "manufacturer": "Rose53",
+        "model": "Default Model",
+        "serialNo": "Default Serial Number",
+        "characteristicProperties": "{}",
+        "x": 1150,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b6f79a0e.22d3a",
+        "type": "change",
+        "z": "61c2c070.b79548",
+        "name": "remove time",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload.time",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 270,
+        "y": 60,
+        "wires": [
+            [
+                "8dafd216.8f2338"
+            ]
+        ]
+    },
+    {
+        "id": "c7cf1208.a7394",
+        "type": "change",
+        "z": "61c2c070.b79548",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload.pm25",
+                "pt": "msg",
+                "to": "payload.PM2_5Density",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.sensor",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.type",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 460,
+        "wires": [
+            [
+                "701e1e08.96726"
+            ]
+        ]
+    },
+    {
+        "id": "701e1e08.96726",
+        "type": "function",
+        "z": "61c2c070.b79548",
+        "name": "PM25 AirQuality",
+        "func": "\n// calculate the AirQuality \nmsg.payload.AirQuality = 0;  // unknown\n\nif (msg.payload.PM2_5Density < 8.5) {\n    msg.payload.AirQuality = 1; // excellent\n} else if (msg.payload.PM2_5Density < 20) {\n    msg.payload.AirQuality = 2; // good\n} else if (msg.payload.PM2_5Density < 28) {\n    msg.payload.AirQuality = 3; // fair\n} else if (msg.payload.PM2_5Density < 50) {\n    msg.payload.AirQuality = 4; // inferior\n} else {\n    msg.payload.AirQuality = 5; // poor\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 740,
+        "y": 460,
+        "wires": [
+            [
+                "14de922b.8939be"
+            ]
+        ]
+    },
+    {
+        "id": "511fe987.a629c",
+        "type": "change",
+        "z": "61c2c070.b79548",
+        "name": "remove place",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload.place",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 280,
+        "wires": [
+            [
+                "336b63d4.3e53dc"
+            ]
+        ]
+    },
+    {
+        "id": "4b6268b0.6f5bd",
+        "type": "change",
+        "z": "61c2c070.b79548",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload.temperature",
+                "pt": "msg",
+                "to": "payload.CurrentTemperature",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.sensor",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.type",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 540,
+        "wires": [
+            [
+                "7e5774e9.2b3064"
+            ]
+        ]
+    },
+    {
+        "id": "7e5774e9.2b3064",
+        "type": "homekit-service",
+        "z": "61c2c070.b79548",
+        "bridge": "df7b0f9c.c05108",
+        "name": "Temperature Dustsensor",
+        "serviceName": "TemperatureSensor",
+        "manufacturer": "Rose53",
+        "model": "Default Model",
+        "serialNo": "Default Serial Number",
+        "characteristicProperties": "{}",
+        "x": 770,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "307df9e5.7eb10e",
+        "type": "homekit-service",
+        "z": "61c2c070.b79548",
+        "bridge": "df7b0f9c.c05108",
+        "name": "Humidity Dustsensor",
+        "serviceName": "HumiditySensor",
+        "manufacturer": "Rose53",
+        "model": "Default Model",
+        "serialNo": "Default Serial Number",
+        "characteristicProperties": "{}",
+        "x": 760,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dde9d439.56b57",
+        "type": "change",
+        "z": "61c2c070.b79548",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload.humidity",
+                "pt": "msg",
+                "to": "payload.CurrentRelativeHumidity",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.sensor",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.type",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 620,
+        "wires": [
+            [
+                "307df9e5.7eb10e"
+            ]
+        ]
+    },
+    {
+        "id": "14de922b.8939be",
+        "type": "change",
+        "z": "61c2c070.b79548",
+        "name": "delete pm25 density",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload.PM2_5Density",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 940,
+        "y": 460,
+        "wires": [
+            [
+                "543d74c3.881c6c"
             ]
         ]
     },
@@ -461,13 +700,24 @@
         "wholemsg": "false"
     },
     {
-        "id": "3ef852b9.f186a6",
+        "id": "6db576f4.9fa0a",
         "type": "homekit-bridge",
         "z": "",
-        "bridgeName": "PM10",
-        "pinCode": "314-20-003",
+        "bridgeName": "Dustsensor SDS",
+        "pinCode": "314-20-007",
         "port": "",
         "manufacturer": "Default Manufacturer",
+        "model": "Default Model",
+        "serialNo": "Default Serial Number"
+    },
+    {
+        "id": "df7b0f9c.c05108",
+        "type": "homekit-bridge",
+        "z": "",
+        "bridgeName": "Dustsensor DHT",
+        "pinCode": "314-20-008",
+        "port": "",
+        "manufacturer": "Rose53",
         "model": "Default Model",
         "serialNo": "Default Serial Number"
     }
