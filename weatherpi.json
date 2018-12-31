@@ -279,7 +279,7 @@
         "model": "Default Model",
         "serialNo": "Default Serial Number",
         "characteristicProperties": "{}",
-        "x": 1090,
+        "x": 1110,
         "y": 280,
         "wires": [
             []
@@ -381,13 +381,6 @@
                 "t": "delete",
                 "p": "payload.time",
                 "pt": "msg"
-            },
-            {
-                "t": "set",
-                "p": "payload.AirQuality",
-                "pt": "msg",
-                "to": "payload.pm10 <= 12?0:\t  payload.pm10 <= 26?2:\t    payload.pm10 <= 40?3:\t        payload.pm10 <= 50?5:\t            payload.pm10 <= 75?6:7\t\t\t",
-                "tot": "jsonata"
             }
         ],
         "action": "",
@@ -399,7 +392,7 @@
         "y": 280,
         "wires": [
             [
-                "8f833f93.7cf838"
+                "9448d86b.c03498"
             ]
         ]
     },
@@ -437,13 +430,15 @@
         "type": "function",
         "z": "61c2c070.b79548",
         "name": "PM10 AirQuality",
-        "func": "\nreturn msg;",
+        "func": "// calculate the AirQuality \nmsg.payload.AirQuality = 0;  // unknown\n\nif (msg.payload.PM10Density < 12) {\n    msg.payload.AirQuality = 1; // excellent\n} else if (msg.payload.PM10Density < 26) {\n    msg.payload.AirQuality = 2; // good\n} else if (msg.payload.PM10Density < 40) {\n    msg.payload.AirQuality = 3; // fair\n} else if (msg.payload.PM10Density < 75) {\n    msg.payload.AirQuality = 4; // inferior\n} else {\n    msg.payload.AirQuality = 5; // poor\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 940,
-        "y": 500,
+        "x": 980,
+        "y": 240,
         "wires": [
-            []
+            [
+                "8f833f93.7cf838"
+            ]
         ]
     },
     {
