@@ -1,0 +1,479 @@
+[
+    {
+        "id": "61c2c070.b79548",
+        "type": "tab",
+        "label": "WeatherPi",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "7642f589.839ecc",
+        "type": "homekit-service",
+        "z": "61c2c070.b79548",
+        "bridge": "48282a95.9aa77c",
+        "name": "Temperature Birdhouse",
+        "serviceName": "TemperatureSensor",
+        "manufacturer": "Rose53",
+        "model": "Default Model",
+        "serialNo": "Default Serial Number",
+        "characteristicProperties": "{}",
+        "x": 1110,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "849508f.a1a06f8",
+        "type": "websocket in",
+        "z": "61c2c070.b79548",
+        "name": "WeatherPi",
+        "server": "",
+        "client": "83ad8321.e1ff",
+        "x": 100,
+        "y": 240,
+        "wires": [
+            [
+                "42f6679d.2872e"
+            ]
+        ]
+    },
+    {
+        "id": "42f6679d.2872e",
+        "type": "json",
+        "z": "61c2c070.b79548",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 190,
+        "y": 160,
+        "wires": [
+            [
+                "8dafd216.8f2338"
+            ]
+        ]
+    },
+    {
+        "id": "8dafd216.8f2338",
+        "type": "switch",
+        "z": "61c2c070.b79548",
+        "name": "place",
+        "property": "payload.place",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "BIRDHOUSE",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "ANEMOMETER",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "DUSTSENSOR",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 270,
+        "y": 240,
+        "wires": [
+            [
+                "f0efd85d.6648b"
+            ],
+            [],
+            [
+                "336b63d4.3e53dc"
+            ]
+        ]
+    },
+    {
+        "id": "f0efd85d.6648b",
+        "type": "switch",
+        "z": "61c2c070.b79548",
+        "name": "birdhouse sensor",
+        "property": "payload.sensor",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "BME280",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 450,
+        "y": 140,
+        "wires": [
+            [
+                "ee87b5b5.2c57e8"
+            ]
+        ]
+    },
+    {
+        "id": "ee87b5b5.2c57e8",
+        "type": "switch",
+        "z": "61c2c070.b79548",
+        "name": "sensor data",
+        "property": "payload.type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "TEMPERATURE",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "HUMIDITY",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "PRESSURE",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 670,
+        "y": 140,
+        "wires": [
+            [
+                "2c50db98.69b0ec"
+            ],
+            [
+                "c55d77d5.23a76"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "2c50db98.69b0ec",
+        "type": "change",
+        "z": "61c2c070.b79548",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload.temperature",
+                "pt": "msg",
+                "to": "payload.CurrentTemperature",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.sensor",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.type",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.place",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.time",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 860,
+        "y": 100,
+        "wires": [
+            [
+                "7642f589.839ecc"
+            ]
+        ]
+    },
+    {
+        "id": "c55d77d5.23a76",
+        "type": "change",
+        "z": "61c2c070.b79548",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload.humidity",
+                "pt": "msg",
+                "to": "payload.CurrentRelativeHumidity",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.sensor",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.type",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.place",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.time",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 860,
+        "y": 140,
+        "wires": [
+            [
+                "87ec2281.8884a8"
+            ]
+        ]
+    },
+    {
+        "id": "87ec2281.8884a8",
+        "type": "homekit-service",
+        "z": "61c2c070.b79548",
+        "bridge": "48282a95.9aa77c",
+        "name": "Humidity Birdhouse",
+        "serviceName": "HumiditySensor",
+        "manufacturer": "Rose53",
+        "model": "Default Model",
+        "serialNo": "Default Serial Number",
+        "characteristicProperties": "{}",
+        "x": 1090,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8f833f93.7cf838",
+        "type": "homekit-service",
+        "z": "61c2c070.b79548",
+        "bridge": "3ef852b9.f186a6",
+        "name": "PM10 Dustsensor",
+        "serviceName": "AirQualitySensor",
+        "manufacturer": "Rose53",
+        "model": "Default Model",
+        "serialNo": "Default Serial Number",
+        "characteristicProperties": "{}",
+        "x": 1090,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "336b63d4.3e53dc",
+        "type": "switch",
+        "z": "61c2c070.b79548",
+        "name": "dust sensor",
+        "property": "payload.sensor",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "SDS011",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "DHT22",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 450,
+        "y": 360,
+        "wires": [
+            [
+                "94520610.b706b8"
+            ],
+            [
+                "341c8868.04f0d8"
+            ]
+        ]
+    },
+    {
+        "id": "94520610.b706b8",
+        "type": "switch",
+        "z": "61c2c070.b79548",
+        "name": "sensor data",
+        "property": "payload.type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "DUST_PM10",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "DUST_PM25",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 670,
+        "y": 340,
+        "wires": [
+            [
+                "2e48efb9.994a88"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "2e48efb9.994a88",
+        "type": "change",
+        "z": "61c2c070.b79548",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload.pm10",
+                "pt": "msg",
+                "to": "payload.PM10Density",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.sensor",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.type",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.place",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.time",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload.AirQuality",
+                "pt": "msg",
+                "to": "payload.pm10 <= 12?0:\t  payload.pm10 <= 26?2:\t    payload.pm10 <= 40?3:\t        payload.pm10 <= 50?5:\t            payload.pm10 <= 75?6:7\t\t\t",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 860,
+        "y": 280,
+        "wires": [
+            [
+                "8f833f93.7cf838"
+            ]
+        ]
+    },
+    {
+        "id": "341c8868.04f0d8",
+        "type": "switch",
+        "z": "61c2c070.b79548",
+        "name": "sensor data",
+        "property": "payload.type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "TEMPERATURE",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "HUMIDITY",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 670,
+        "y": 400,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "9448d86b.c03498",
+        "type": "function",
+        "z": "61c2c070.b79548",
+        "name": "PM10 AirQuality",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 940,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "48282a95.9aa77c",
+        "type": "homekit-bridge",
+        "z": "",
+        "bridgeName": "Birdhouse",
+        "pinCode": "314-20-001",
+        "port": "",
+        "manufacturer": "Rose53",
+        "model": "Default Model",
+        "serialNo": "Default Serial Number"
+    },
+    {
+        "id": "83ad8321.e1ff",
+        "type": "websocket-client",
+        "z": "",
+        "path": "ws://weatherpi.local:8080/weatherpi/sensorevents",
+        "tls": "",
+        "wholemsg": "false"
+    },
+    {
+        "id": "3ef852b9.f186a6",
+        "type": "homekit-bridge",
+        "z": "",
+        "bridgeName": "PM10",
+        "pinCode": "314-20-003",
+        "port": "",
+        "manufacturer": "Default Manufacturer",
+        "model": "Default Model",
+        "serialNo": "Default Serial Number"
+    }
+]
